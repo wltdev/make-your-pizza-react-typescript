@@ -11,9 +11,9 @@ import Checkout from '../../components/Checkout'
 
 export default function Home() {
   const classes = useStyles()
-  const [configs, setConfigs] = useState<any>({})
   const [configSizes, setConfigsSizes] = useState<any>([])
   const [configCrusts, setConfigsCrusts] = useState<any>([])
+  const [maxFreeToppings, setMaxFreeToppings] = useState(3)
   const [step, setStep] = useState(1)
   const [toppings, setToppings] = useState([])
   const [size, setSize] = useState<Size>()
@@ -24,9 +24,9 @@ export default function Home() {
   useEffect(() => {
     const getPizzaConfig = async () => {
       const { data } = await api.get('/pizza/config')
-      setConfigs(data)
       setConfigsSizes(data.pizza.size)
       setConfigsCrusts(data.pizza.crust)
+      setMaxFreeToppings(data.pizza.maxFreeToppings)
     }
     const getToppings = async () => {
       const { data } = await api.get('/pizza/toppings')
@@ -39,7 +39,7 @@ export default function Home() {
 
   // Verifying additional toppings
   useEffect(() => {
-    if (selectedToppings.length > 3) {
+    if (selectedToppings.length > maxFreeToppings) {
       let val = selectedToppings.length - 3
       val *= 0.5
       setAdditionalToppings(val)

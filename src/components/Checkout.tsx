@@ -26,9 +26,9 @@ export default function Checkout({
     <>
       <h4>Check your Pizza</h4>
       <div className={classes.root}>
-        <p>Size: { size?.name }</p>
-        <p>Crust: { crust?.name }</p>
-        <p>Toppings:</p>
+        <p>Size: { size?.name } - ${ size?.price }</p>
+        <p>Crust: { crust?.name } - ${ crust?.price }</p>
+        <p>Toppings: ${ additionalToppings }</p>
         {
           toppings.map((topping: string) => (
             <span>{ topping }</span>
