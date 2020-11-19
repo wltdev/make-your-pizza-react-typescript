@@ -41,31 +41,30 @@ export default function ToppingCard({
     onSelect
 }: Prop) {
   const classes = useStyles()
-  const [checked, setChecked] = React.useState(false)
+  const [checked, setChecked] = useState(false)
   
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    onSelect(name, event.target.checked)
     setChecked(event.target.checked)
+    onSelect(name, event.target.checked)
   }
-
-
+  
   return (
     <div className={classes.root} key={key}>
         <Card className={classes.card}>
             <CardMedia
                 className={classes.media}
                 image={image}
-                title="Paella dish"
+                title={name}
             />
             <CardContent>
                 <Typography className={classes.title} color="textSecondary" gutterBottom>
-                {name}
+                  {name}
                 </Typography>
             </CardContent>
             <CardActions>
                 <Checkbox
                     checked={checked}
-                    onChange={handleChange}
+                    onChange={(event) => handleChange(event)}
                     inputProps={{ 'aria-label': 'primary checkbox' }}
                 />
             </CardActions>

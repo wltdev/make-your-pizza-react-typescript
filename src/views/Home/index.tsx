@@ -3,15 +3,16 @@ import Button from '@material-ui/core/Button'
 import { makeStyles } from '@material-ui/core/styles'
 
 import api from '../../utils/api'
-import ToppingCard from '../../components/Cards/Topping'
+import Toppings from '../../components/Toppins'
 
-export default function SelectToppings() {
+export default function Home() {
   const classes = useStyles()
+  const [configs, setConfigs] = useState<any>({})
+  const [step, setStep] = useState(1)
   const [toppings, setToppings] = useState([])
   const [selectedToppings, setSelectedToppings] = useState<string[]>([])
-  const [pizzaConfig, setPizzaConfig] = useState<any>({})
 
-  const handleSelect = (value: string, add: boolean) => {
+  const toppingsHandler = (value: string, add: boolean) => {
     if (add) {
       setSelectedToppings([ ...selectedToppings, value ])
     } else {
@@ -21,24 +22,20 @@ export default function SelectToppings() {
 
   const showAll = () => {
     console.log(selectedToppings)
-    console.log(pizzaConfig)
   }
-
+  
   useEffect(() => {
-    const getToppings = async () => {
-      const { data } = await api.get('/pizza/toppings')
-      if(data.length) {
-        setToppings(data)
-      }
-    }
-
     const getPizzaConfig = async () => {
       const { data } = await api.get('/pizza/config')
-      setPizzaConfig(data)
+      setConfigs(data)
+    }
+    const getToppings = async () => {
+      const { data } = await api.get('/pizza/toppings')
+      setToppings(data)
     }
 
-    getToppings()
     getPizzaConfig()
+    getToppings()
   }, [])
 
   useEffect(() => {
@@ -47,20 +44,18 @@ export default function SelectToppings() {
     }
   }, [selectedToppings])
 
+  function Steps() {
+    if (step === 2) {
+      return <h1>Este 2</h1>
+    }
+    
+    return 
+  } 
+
   return (
     <>
-      <div className={classes.toppings}>
-        { toppings.map((doc: any, index) => {
-          return (
-            <ToppingCard 
-              key={index}
-              image={doc.image} 
-              name={doc.name} 
-              onSelect={handleSelect} 
-            />
-          )
-        }) }
-      </div>
+      { step === 1 && <Toppings toppings={toppings} toppingsHandler={toppingsHandler} changeStep={setStep} /> }
+      { step === 2 && <h1>Step 2</h1> }      
       <Button onClick={showAll} size="small">All</Button>
     </>
   )
