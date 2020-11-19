@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { makeStyles } from '@material-ui/core/styles'
+import { makeStyles, createStyles, Theme } from '@material-ui/core/styles'
 import Card from '@material-ui/core/Card'
 import CardMedia from '@material-ui/core/CardMedia'
 import CardActions from '@material-ui/core/CardActions'
@@ -8,28 +8,8 @@ import { useToasts } from 'react-toast-notifications'
 import Typography from '@material-ui/core/Typography'
 import Checkbox from '@material-ui/core/Checkbox'
 
-const useStyles = makeStyles({
-  root: {
-   display: 'flex',
-   flexDirection: 'row',   
-   justifyContent: 'space-around',
-   margin: 10
-  },  
-  card: {
-    minWidth: 275,
-  },
-  title: {
-    fontSize: 14,
-  },
-  media: {
-    height: 140,
-    objectFit: 'cover'
-  }
-})
-
 type Prop = {
    name: string
-   key: number
    image: string
    ableToSelect: boolean
    onSelect(name: string, add: boolean): void
@@ -37,7 +17,6 @@ type Prop = {
   
 export default function ToppingCard({ 
     name,
-    key,
     image,
     ableToSelect,
     onSelect
@@ -59,26 +38,62 @@ export default function ToppingCard({
   }
   
   return (
-    <div className={classes.root} key={key}>
-        <Card className={classes.card}>
-            <CardMedia
-                className={classes.media}
-                image={image}
-                title={name}
-            />
-            <CardContent>
-                <Typography className={classes.title} color="textSecondary" gutterBottom>
-                  {name}
-                </Typography>
-            </CardContent>
-            <CardActions>
-                <Checkbox
-                    checked={checked}
-                    onChange={(event) => handleChange(event)}
-                    inputProps={{ 'aria-label': 'primary checkbox' }}
-                />
-            </CardActions>
-        </Card>
-    </div>  
+    <Card className={classes.card}>
+      <CardMedia
+        className={classes.cardMedia}
+        image={image}
+        title={name}
+      />
+      <CardContent className={classes.cardContent}>
+        <Typography className={classes.title} color="textSecondary" gutterBottom>
+          {name}
+        </Typography>
+      </CardContent>
+      <CardActions className={classes.cardActions}>
+        <Checkbox
+          className={classes.checkbox}
+          color="default"
+          checked={checked}
+          onChange={(event) => handleChange(event)}
+          inputProps={{ 'aria-label': 'primary checkbox' }}
+        />
+      </CardActions>
+    </Card>
   )
 }
+
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    title: {
+      fontSize: 18,
+      fontWeight: 'bold'
+    },
+    card: {
+      height: '100%',
+      display: 'flex',
+      padding: 10,
+      flexDirection: 'column',
+    },
+    cardMedia: {
+      paddingTop: '56.25%', // 16:9
+      backgroundSize: 'contain',
+      '@media (max-width: 780px)' : {
+        paddingTop: '30%'
+      }
+    },
+    cardContent: {
+      display: 'flex',
+      justifyContent: 'center',
+      padding: 0
+    },
+    cardActions: {
+      display: 'flex',
+      justifyContent: 'center',
+      padding: 0
+    },
+    checkbox: {
+      transform: 'scale(1.5)',
+		  margin: 15
+    }
+  })
+)

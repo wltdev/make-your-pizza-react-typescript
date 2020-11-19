@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-export const API_URL = 'http://localhost:5001/make-your-pizza-app/us-central1/api'
+export const API_URL = 'https://us-central1-make-your-pizza-app.cloudfunctions.net/api'
 
 const fetch = () => {
   const defaultOptions = {

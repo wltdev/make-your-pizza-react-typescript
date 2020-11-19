@@ -7,7 +7,7 @@ import Home from '../views/Home'
 export default function Routes() {
   return (
     <Router>
-      <Route component={Home} path="/" title="Make your pizza" />
+      <Route component={Home} path="/" title="Make your own pizza" />
     </Router>
   )
 }

@@ -1,7 +1,7 @@
 import React from 'react'
 import { StylesProvider } from '@material-ui/core/styles'
 
-import './App.css'
+import GlobalStyle from './styles/global'
 import Routes from './routes'
 
 function App() {
@@ -9,6 +9,7 @@ function App() {
     <>
       <StylesProvider injectFirst>
         <Routes />
+        <GlobalStyle />
       </StylesProvider>
     </>
   )

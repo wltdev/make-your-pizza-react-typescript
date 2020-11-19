@@ -1,6 +1,9 @@
 import React from 'react'
-import { makeStyles } from '@material-ui/core/styles'
+import { makeStyles, createStyles, Theme } from '@material-ui/core/styles'
 import Button from '@material-ui/core/Button'
+import Grid from '@material-ui/core/Grid'
+import Icon from '@material-ui/core/Icon'
+import NavigateNextIcon from '@material-ui/icons/NavigateNext'
 
 import ToppingCard from './Cards/ToppingCard'
 
@@ -23,35 +26,48 @@ export default function Toppings({
   const ableToSelect = totalSelected < maxToppings
 
   return (
-    <>
-      <div className={classes.toppings}>
+    <div className={classes.root}>
+      <h3>Choose Toppings</h3>
+      <Grid container spacing={3}>
         { toppings.map((doc: any, index: any) => {
           return (
-            <ToppingCard 
-              key={index}
-              image={doc.image} 
-              name={doc.name} 
-              onSelect={toppingsHandler}
-              ableToSelect={ableToSelect} 
-            />
+            <Grid item key={doc.name} xs={12} sm={6} md={4}>
+              <ToppingCard
+                image={doc.image} 
+                name={doc.name} 
+                onSelect={toppingsHandler}
+                ableToSelect={ableToSelect} 
+              />
+            </Grid>
           )
         }) }
+      </Grid>
+      <div className={classes.button}>
+        <Button 
+          size="large"
+          variant="contained" 
+          color="primary"
+          endIcon={<NavigateNextIcon />}
+          onClick={() => changeStep(4)}
+        >
+          Checkout
+        </Button>
       </div>
-
-      <Button size="small" onClick={() => changeStep(4)}>Checkout</Button>
-    </>
+    </div>
   )
 }
 
-const useStyles = makeStyles({
-  toppings: {
-    display: 'flex',
-    flexDirection: 'row',   
-    justifyContent: 'space-between',
-    margin: 10,
-    '@media (max-width: 780px)' : {
-      flexDirection: 'column'
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    root: {
+      flexGrow: 1,
+      textAlign: 'center'
+    },
+    button: {
+      display: 'flex',
+      justifyContent: 'center',
+      marginTop: 30
     }
-  }
-})
+  }),
+);
   

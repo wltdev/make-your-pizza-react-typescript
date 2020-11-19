@@ -11,10 +11,10 @@ import Checkout from '../../components/Checkout'
 
 export default function Home() {
   const classes = useStyles()
+  const [step, setStep] = useState(1)
   const [configSizes, setConfigsSizes] = useState<any>([])
   const [configCrusts, setConfigsCrusts] = useState<any>([])
   const [maxFreeToppings, setMaxFreeToppings] = useState(3)
-  const [step, setStep] = useState(1)
   const [toppings, setToppings] = useState([])
   const [size, setSize] = useState<Size>()
   const [crust, setCrust] = useState<Crust>()
@@ -56,15 +56,8 @@ export default function Home() {
     }
   }
 
-  const showAll = () => {
-    console.log(selectedToppings)
-    console.log(size)
-    console.log(additionalToppings)
-    console.log(crust)
-  }
-
   return (
-    <ToastProvider>
+    <ToastProvider placement="bottom-right">
       { step === 1 && 
         <SelectSize sizes={configSizes} onSelect={setSize} changeStep={setStep} /> 
       }
@@ -91,8 +84,6 @@ export default function Home() {
           additionalToppings={additionalToppings}
         />
       }
-
-      <Button onClick={showAll} size="small">All</Button>
     </ToastProvider>
   )
 }

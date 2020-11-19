@@ -1,6 +1,11 @@
 import React from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import Button from '@material-ui/core/Button'
+import Card from '@material-ui/core/Card'
+import Grid from '@material-ui/core/Grid'
+import CardContent from '@material-ui/core/CardContent'
+import Typography from '@material-ui/core/Typography'
+import CardActions from '@material-ui/core/CardActions'
 
 export type Size = {
   name: string
@@ -27,37 +32,75 @@ export default function SelectSize({
   }  
 
   return (
-    <>
-      <h4>Select size</h4>
-      <div className={classes.root}>
+    <div className={classes.root}>
+      <h3>Choose Size</h3>
+      <Grid container spacing={3}>
         {
           sizes.map((size: Size) => (
-            <div className={classes.size}>
-              <h3>{size.name}</h3>
-              <p>${size.price}</p>
-              <Button size="small" onClick={() => _selectSize(size)}>Select</Button>
-            </div>
+            <Grid key={size.name} item xs>
+              <Card className={classes.card}>
+                <CardContent className={classes.cardContent}>
+                  <Typography  variant="h6" className={classes.title} color="textSecondary" gutterBottom>
+                    {size.name}
+                  </Typography>
+                  <Typography  variant="h6" className={classes.price} color="textSecondary" gutterBottom>
+                    ${size.price}
+                  </Typography>
+                </CardContent>
+                <CardActions className={classes.cardActions}>
+                  <Button 
+                    size="medium" 
+                    variant="contained" 
+                    color="primary"
+                    onClick={() => _selectSize(size)}
+                  >
+                    Select
+                  </Button>
+                </CardActions>
+              </Card>
+            </Grid>
           ))
         }
-      </div>
-    </>
+      </Grid>
+    </div>
   )
 }
 
 const useStyles = makeStyles({
   root: {
+    flexGrow: 1,
+    textAlign: 'center'
+  },
+  title: {
+    fontSize: 18,
+    fontWeight: 'bold'
+  },
+  price: {
+    fontSize: 22,
+    fontWeight: 'bold',
+    color: 'rgb(5 124 55)'
+  },
+  card: {
+    height: '100%',
     display: 'flex',
-    flexDirection: 'row',   
-    justifyContent: 'space-around',
-    margin: 10,
+    padding: 10,
+    flexDirection: 'column',
+  },
+  cardMedia: {
+    paddingTop: '56.25%', // 16:9
+    backgroundSize: 'contain',
     '@media (max-width: 780px)' : {
-      flexDirection: 'column'
+      paddingTop: '30%'
     }
   },
-  size: {
+  cardContent: {
     display: 'flex',
     flexDirection: 'column',
-    alignItems: 'center',
-    margin: 10
-  }
+    padding: 0
+  },
+  cardActions: {
+    display: 'flex',
+    justifyContent: 'center',
+    padding: 0
+  },
 })
