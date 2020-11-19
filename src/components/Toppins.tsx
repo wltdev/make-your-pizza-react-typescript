@@ -6,16 +6,22 @@ import ToppingCard from './Cards/ToppingCard'
 
 type Props = {
     toppings: Array<any>
+    maxToppings: number
+    totalSelected: number
     toppingsHandler(name: string, add: boolean): void
     changeStep(step: number): void
 }
 
 export default function Toppings({ 
     toppings,
+    maxToppings,
+    totalSelected,
     toppingsHandler,
     changeStep
 }: Props) {
   const classes = useStyles()
+  const ableToSelect = totalSelected < maxToppings
+
   return (
     <>
       <div className={classes.toppings}>
@@ -25,13 +31,14 @@ export default function Toppings({
               key={index}
               image={doc.image} 
               name={doc.name} 
-              onSelect={toppingsHandler} 
+              onSelect={toppingsHandler}
+              ableToSelect={ableToSelect} 
             />
           )
         }) }
       </div>
 
-      <Button size="small" onClick={() => changeStep(2)}>step 2</Button>
+      <Button size="small" onClick={() => changeStep(4)}>Checkout</Button>
     </>
   )
 }

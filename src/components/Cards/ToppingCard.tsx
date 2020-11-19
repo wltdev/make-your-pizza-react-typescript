@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Card from '@material-ui/core/Card';
-import CardMedia from '@material-ui/core/CardMedia';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
-import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
+import React, { useState } from 'react'
+import { makeStyles } from '@material-ui/core/styles'
+import Card from '@material-ui/core/Card'
+import CardMedia from '@material-ui/core/CardMedia'
+import CardActions from '@material-ui/core/CardActions'
+import CardContent from '@material-ui/core/CardContent'
+import { useToasts } from 'react-toast-notifications'
+import Typography from '@material-ui/core/Typography'
 import Checkbox from '@material-ui/core/Checkbox'
 
 const useStyles = makeStyles({
@@ -31,6 +31,7 @@ type Prop = {
    name: string
    key: number
    image: string
+   ableToSelect: boolean
    onSelect(name: string, add: boolean): void
 }
   
@@ -38,14 +39,23 @@ export default function ToppingCard({
     name,
     key,
     image,
+    ableToSelect,
     onSelect
 }: Prop) {
+  const { addToast } = useToasts()
   const classes = useStyles()
   const [checked, setChecked] = useState(false)
   
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setChecked(event.target.checked)
-    onSelect(name, event.target.checked)
+    if (ableToSelect || !event.target.checked) {
+      setChecked(event.target.checked)
+      onSelect(name, event.target.checked)
+    } else {
+      addToast(`Toppings limit exceeded`, { 
+        appearance: 'error', 
+        autoDismiss: true 
+      })
+    }
   }
   
   return (
