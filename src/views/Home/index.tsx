@@ -21,6 +21,7 @@ export default function Home() {
   const [selectedToppings, setSelectedToppings] = useState<string[]>([])
   const [additionalToppings, setAdditionalToppings] = useState(0)
   
+  // Getting pizza configs and toppings from Firebase storage
   useEffect(() => {
     const getPizzaConfig = async () => {
       const { data } = await api.get('/pizza/config')
@@ -40,7 +41,7 @@ export default function Home() {
   // Verifying additional toppings
   useEffect(() => {
     if (selectedToppings.length > maxFreeToppings) {
-      let val = selectedToppings.length - 3
+      let val = selectedToppings.length - maxFreeToppings
       val *= 0.5
       setAdditionalToppings(val)
     } else {
