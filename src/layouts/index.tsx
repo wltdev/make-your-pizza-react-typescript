@@ -9,13 +9,14 @@ import LocalPizzaIcon from '@material-ui/icons/LocalPizza';
 
 const useStyles = makeStyles((theme) => ({
     paper: {
-      marginTop: theme.spacing(8),      
+      marginTop: theme.spacing(8),  
+      marginBottom: theme.spacing(8),
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
       '@media (max-width: 780px)' : {
-        marginLeft: theme.spacing(8),
-        marginRight: theme.spacing(8)
+        marginLeft: theme.spacing(4),
+        marginRight: theme.spacing(4)
       }
     }
   })
@@ -26,7 +27,7 @@ export default function DefaultLayout({ children, title }: any) {
   return (
     <React.Fragment>
       <CssBaseline />
-      <AppBar position="relative">
+      <AppBar position="sticky">
         <Toolbar>
           <LocalPizzaIcon />
           <Typography variant="h6" color="inherit" noWrap>

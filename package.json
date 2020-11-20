@@ -24,7 +24,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "deployTest": "firebase use make-your-pizza-app && firebase deploy --only hosting",
+    "deployTest": "firebase deploy --only hosting",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

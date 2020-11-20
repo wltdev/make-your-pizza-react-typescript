@@ -81,6 +81,7 @@ export default function Home() {
           size={size}
           crust={crust}
           toppings={selectedToppings}
+          maxFreeToppings={maxFreeToppings - 1}
           additionalToppings={additionalToppings}
         />
       }
